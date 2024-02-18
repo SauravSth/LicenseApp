@@ -1,0 +1,182 @@
+nav {
+	display: flex;
+	justify-content: space-between;
+	padding: 2em 5em;
+	background-color: #022140;
+	color: white;
+}
+
+.right ul li {
+	display: inline;
+	margin-right: 2em;
+}
+
+.right ul li a {
+	text-decoration: none;
+	color: white;
+	font-weight: bold;
+}
+main {
+	min-height: 70vh;
+}
+.placeholder {
+	text-align: center;
+	color: white;
+	background-color: #022140;
+	width: 100%;
+	padding: 10em 0;
+}
+
+.placeholder h1 {
+	font-size: 70px;
+	margin-bottom: 20px;
+}
+
+.placeholder2 {
+	margin: 0 auto;
+	background-color: white;
+	color: black;
+	padding: 5em 0;
+	text-align: center;
+}
+
+.placeholder2 h2 {
+	margin-bottom: 20px;
+	font-weight: 900;
+}
+
+.placeholder2 h3 {
+	font-weight: 100;
+}
+
+footer {
+	text-align: center;
+	padding: 6em;
+	background-color: #494b68;
+	color: white;
+}
+
+/* FORM CSS */
+
+form {
+	width: 50%;
+	margin: 20px auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	box-shadow: 2px 2px 9px gray;
+	border-radius: 10px;
+	padding: 30px 20px;
+	background-color: rgb(235, 233, 233);
+}
+
+form input[type='email'],
+form input[type='text'],
+form input[type='password'] {
+	padding: 1em 5em 1em 1em;
+	border: 1px solid lightgray;
+	margin: 10px 0px;
+	border-radius: 10px;
+}
+
+form input[type='email'] {
+	margin-bottom: 0;
+}
+
+label[for='password'] {
+	margin-top: 10px;
+}
+
+button {
+	padding: 1em;
+	width: 150px;
+	margin: 10px 0;
+	background-color: #6e6658;
+	color: white;
+	border: none;
+	border-radius: 10px;
+	text-decoration: none;
+}
+
+.car-info {
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto;
+}
+
+form h2 {
+	margin-bottom: 10px;
+}
+input:disabled {
+	background-color: lightgray;
+}
+.search-result {
+	margin: 1em auto;
+	width: 50%;
+	color: red;
+	background-color: #f4f2f2;
+	border-left: 3px solid #fc6a6a;
+	padding: 2em;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.search-result > h2 {
+	margin-bottom: 1em;
+}
+
+.search-result > a {
+	padding: 1em;
+	width: 150px;
+	background-color: #6e6658;
+	color: white;
+	border: none;
+	border-radius: 10px;
+	text-decoration: none;
+}
+
+table {
+	width: 60%;
+	margin: 30px auto;
+	text-align: center;
+	border: 1px solid lightgray;
+}
+
+td,
+th {
+	padding: 1em 0 1em 0;
+}
+th {
+	border-bottom: 1px solid lightgray;
+}
+
+td a {
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.edit,
+.delete {
+	color: white;
+	padding: 0.7em;
+	border: none;
+	border-radius: 10px;
+}
+
+.edit {
+	background-color: #2d5f5d;
+}
+.delete {
+	background-color: darkred;
+}
+.err {
+	display: none;
+	color: red;
+	background-color: #f4f2f2;
+	border-left: 3px solid #fc6a6a;
+	padding: 10px;
+	margin-bottom: 0.5em;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}

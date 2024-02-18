@@ -1,0 +1,37 @@
+<%- include('./partials/header') %>
+<body>
+	<%- include('./partials/nav')%>
+
+	<main>
+		<%- include('./partials/banner') %>
+
+		<form>
+			<label for="email">Email address</label>
+			<input
+				type="email"
+				class="email"
+				id="email"
+				placeholder="Enter email"
+			/>
+			<small id="emailHelp"
+				>We'll never share your email with anyone else.</small
+			>
+
+			<label for="password">Password</label>
+			<input
+				type="password"
+				class="password"
+				id="password"
+				placeholder="Password"
+			/>
+			<div class="check">
+				<input type="checkbox" class="checkbox" id="checkbox" />
+				<label class="form-check-label" for="exampleCheck1"
+					>Check me out</label
+				>
+			</div>
+			<button type="submit">Submit</button>
+		</form>
+	</main>
+</body>
+<%- include('./partials/footer') %>

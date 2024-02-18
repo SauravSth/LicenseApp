@@ -1,0 +1,77 @@
+<%- include('./partials/header') %>
+<body>
+	<%- include('./partials/nav')%>
+	<main>
+		<%- include('./partials/banner') %>
+
+		<section class="personal-info">
+			<form action="/g2Test" method="post" id="g2-form">
+				<h2>Personal Details:</h2>
+				<label for="fname">First Name:</label>
+				<input
+					type="text"
+					name="firstname"
+					id="fname"
+					placeholder="First Name"
+				/>
+				<span class="err"></span>
+				<label for="lname">Last Name:</label>
+				<input
+					type="text"
+					name="lastname"
+					id="lname"
+					placeholder="Last Name"
+				/>
+				<span class="err"></span>
+				<label for="age">Age:</label>
+				<input type="text" name="age" id="age" placeholder="Eg: 24" />
+				<span class="err"></span>
+				<label for="licenseno">License Number:</label>
+				<input
+					type="text"
+					name="licenseno"
+					id="licenseno"
+					placeholder="12345-67890-54321"
+				/>
+				<span class="err"></span>
+				<section class="car-info">
+					<h2>Car Details:</h2>
+					<label for="make">Make:</label>
+					<input
+						type="text"
+						name="make"
+						id="make"
+						placeholder="Make"
+					/>
+					<span class="err"></span>
+					<label for="model">Model:</label>
+					<input
+						type="text"
+						name="model"
+						id="model"
+						placeholder="Model"
+					/>
+					<span class="err"></span>
+					<label for="year">Year:</label>
+					<input
+						type="text"
+						name="year"
+						id="year"
+						placeholder="1998"
+					/>
+					<span class="err"></span>
+					<label for="plate">Plate Number:</label>
+					<input
+						type="text"
+						name="plate"
+						id="plate"
+						placeholder="12345"
+					/>
+					<span class="err"></span>
+				</section>
+				<button>Submit</button>
+			</form>
+		</section>
+	</main>
+	<%- include('./partials/footer') %>
+</body>
