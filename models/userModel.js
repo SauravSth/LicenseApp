@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const URI =
 	'mongodb+srv://Saurav:naruxhina@cluster0.wuw4gfs.mongodb.net/GLicense?retryWrites=true&w=majority'
@@ -47,4 +48,5 @@ const userSchema = mongoose.Schema({
 
 const userModel = mongoose.model('User', userSchema)
 
-module.exports = userModel
+// module.exports = userModel
+export default userModel

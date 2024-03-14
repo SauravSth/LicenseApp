@@ -1,4 +1,6 @@
-const user = require('../models/userModel')
+// const user = require('../models/userModel')
+import user from '../models/userModel.js'
+import bcrypt from 'bcrypt'
 
 class userController {
 	static getDashboard = (req, res) => {
@@ -49,12 +51,15 @@ class userController {
 	static postG2Test = async (req, res) => {
 		try {
 			const data = req.body
+
+			let hashedLicenseNo = bcrypt.hash(data.licenseNo, 10)
+
 			const newUser = new user({
 				firstName: data.firstname,
 				lastName: data.lastname,
 				age: data.age,
 				dateOfBirth: data.dob,
-				licenseNo: data.licenseno,
+				licenseNo: hashedLicenseNo,
 				carDetails: {
 					make: data.make,
 					model: data.model,
@@ -120,4 +125,5 @@ class userController {
 	}
 }
 
-module.exports = userController
+// module.exports = userController
+export default userController

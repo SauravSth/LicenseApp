@@ -1,6 +1,8 @@
-const express = require('express')
+// const express = require('express')
+import express from 'express'
 const router = express.Router()
-const userController = require('../controllers/userController')
+// const userController = require('../controllers/userController')
+import userController from '../controllers/userController.js'
 
 router.get('/', userController.getDashboard)
 router.get('/login', userController.getLogin)
@@ -12,4 +14,5 @@ router.get('/editDetails/:licenseNo', userController.getEditDetails)
 router.post('/editDetails/:licenseNo', userController.postEditDetails)
 router.get('/delete/:licenseNo', userController.getDelete)
 
-module.exports = router
+// module.exports = router
+export default router
