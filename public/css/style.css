@@ -16,6 +16,15 @@ nav {
 	color: white;
 	font-weight: bold;
 }
+.logout {
+	width: inherit;
+	display: inherit;
+	background-color: inherit;
+	box-shadow: none;
+}
+.logout button {
+	background-color: #494b68;
+}
 main {
 	min-height: 70vh;
 }
@@ -72,7 +81,8 @@ form {
 
 form input[type='email'],
 form input[type='text'],
-form input[type='password'] {
+form input[type='password'],
+select {
 	padding: 1em 5em 1em 1em;
 	border: 1px solid lightgray;
 	margin: 10px 0px;
@@ -83,7 +93,8 @@ form input[type='email'] {
 	margin-bottom: 0;
 }
 
-label[for='password'] {
+label[for='password'],
+label[for='usertype'] {
 	margin-top: 10px;
 }
 

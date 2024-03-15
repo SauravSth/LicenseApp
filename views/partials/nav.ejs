@@ -4,10 +4,19 @@
 	</div>
 	<div class="right">
 		<ul>
+			<% if (locals.loggedIn) { %>
 			<li><a href="/">Dashboard</a></li>
 			<li><a href="/g2Test">G2 Test</a></li>
 			<li><a href="/gTest">G Test</a></li>
+			<li>
+				<form action="/logout" method="post" class="logout">
+					<button type="submit">Logout</button>
+				</form>
+			</li>
+			<% } else { %>
 			<li><a href="/login">Login</a></li>
+			<li><a href="/signup">Sign Up</a></li>
+			<% } %>
 		</ul>
 	</div>
 </nav>

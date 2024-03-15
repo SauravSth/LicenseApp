@@ -5,8 +5,8 @@
 	<main>
 		<%- include('./partials/banner') %>
 
-		<form method="post" action="/login">
-			<label for="username">Username</label>
+		<form method="post" action="/signup">
+			<label for="email">Username:</label>
 			<input
 				type="text"
 				class="username"
@@ -23,6 +23,20 @@
 				placeholder="Password"
 				name="password"
 			/>
+			<label for="password">Confirm Password</label>
+			<input
+				type="password"
+				class="password"
+				id="confirmpassword"
+				placeholder="Confirm password"
+				name="confirmpassword"
+			/>
+			<label for="usertype">Select User Type</label>
+			<select name="usertype" id="usertype">
+				<option value="driver">Driver</option>
+				<option value="examiner">Examiner</option>
+				<option value="admin">Admin</option>
+			</select>
 
 			<button type="submit">Submit</button>
 		</form>

@@ -1,4 +1,3 @@
-// const user = require('../models/userModel')
 import user from '../models/userModel.js'
 import bcrypt from 'bcrypt'
 
@@ -7,23 +6,78 @@ class userController {
 		res.render('dashboard', {
 			banner: 'Dashboard',
 			subheading: 'Your Data Here',
+			loggedIn: req.session.loggedIn,
 		})
 	}
 	static getLogin = (req, res) => {
-		res.render('Login', { banner: 'Login', subheading: 'Login Here' })
+		res.render('Login', {
+			banner: 'Login',
+			subheading: 'Login Here',
+			loggedIn: req.session.loggedIn,
+		})
+	}
+	static postLogin = async (req, res) => {
+		try {
+			const data = req.body
+
+			const userData = await user.findOne({ username: data.username })
+
+			const isMatched = await bcrypt.compare(
+				data.password,
+				userData.password
+			)
+			if (isMatched) {
+				req.session.userData = userData
+				req.session.loggedIn = true
+				res.render('dashboard', {
+					banner: 'Dashboard',
+					subheading: 'Successful Login',
+					loggedIn: req.session.loggedIn,
+				})
+			} else {
+				req.session.message = 'Incorrect Password'
+				res.redirect('/login')
+			}
+		} catch (e) {
+			console.log(e)
+		}
+	}
+	static getSignup = (req, res) => {
+		res.render('signup', {
+			banner: 'Signup',
+			subheading: 'Sign Up Here',
+			loggedIn: req.session.loggedIn,
+		})
+	}
+	static postSignup = async (req, res) => {
+		try {
+			const data = req.body
+			const hashedPassword = await bcrypt.hash(data.password, 10)
+
+			const newUser = new user({
+				username: data.username,
+				password: hashedPassword,
+				userType: data.usertype,
+			})
+
+			await newUser.save()
+			res.redirect('/login')
+		} catch (e) {
+			console.log(e)
+		}
 	}
 	static getGTest = (req, res) => {
 		res.render('gTest', {
 			banner: 'G-Test',
 			subheading: 'Login for G-Test',
+			loggedIn: req.session.loggedIn,
 			exists: true,
 		})
 	}
 	static postGTest = async (req, res) => {
 		try {
-			const data = req.body
+			let userData = await user.findOne({ _id: req.session.userData._id })
 
-			let userData = await user.findOne({ licenseNo: data.licenseno })
 			if (userData) {
 				res.render('gTest', {
 					userData,
@@ -42,24 +96,30 @@ class userController {
 			console.log(e)
 		}
 	}
-	static getG2Test = (req, res) => {
-		res.render('g2Test', {
-			banner: 'G2-Test',
-			subheading: 'Book your G2-Test Here',
+	static getG2Test = async (req, res) => {
+		const checkDefault = await user.findOne({
+			_id: req.session.userData._id,
 		})
+		if (checkDefault.licenseNo == 'DEFAULT') {
+			res.render('g2Test', {
+				banner: 'G2-Test',
+				subheading: 'Book your G2-Test Here',
+				loggedIn: req.session.loggedIn,
+			})
+		} else {
+			res.redirect('/')
+		}
 	}
 	static postG2Test = async (req, res) => {
 		try {
 			const data = req.body
-
-			let hashedLicenseNo = bcrypt.hash(data.licenseNo, 10)
 
 			const newUser = new user({
 				firstName: data.firstname,
 				lastName: data.lastname,
 				age: data.age,
 				dateOfBirth: data.dob,
-				licenseNo: hashedLicenseNo,
+				licenseNo: data.licenseno,
 				carDetails: {
 					make: data.make,
 					model: data.model,
@@ -77,6 +137,7 @@ class userController {
 	static getEditDetails = async (req, res) => {
 		try {
 			const licenseNo = req.params.licenseNo
+
 			const searchFromLicenseNo = await user.findOne({
 				licenseNo: licenseNo,
 			})
@@ -85,6 +146,7 @@ class userController {
 				searchedData: searchFromLicenseNo,
 				banner: 'Edit User Car Details',
 				subheading: 'Edit your vehicle details',
+				loggedIn: req.session.loggedIn,
 			})
 		} catch (e) {
 			console.log(e)
@@ -123,7 +185,15 @@ class userController {
 			console.log(e)
 		}
 	}
+	static logout = (req, res) => {
+		req.session.destroy((err) => {
+			if (err) {
+				throw err
+			} else {
+				res.redirect('/login')
+			}
+		})
+	}
 }
 
-// module.exports = userController
 export default userController
