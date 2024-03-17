@@ -5,7 +5,7 @@
 	<main>
 		<%- include('./partials/banner') %>
 
-		<form method="post" action="/login">
+		<form method="post" action="/login" id="login-form">
 			<label for="username">Username</label>
 			<input
 				type="text"
@@ -14,7 +14,7 @@
 				placeholder="Enter username"
 				name="username"
 			/>
-
+			<span class="err"></span>
 			<label for="password">Password</label>
 			<input
 				type="password"
@@ -23,7 +23,7 @@
 				placeholder="Password"
 				name="password"
 			/>
-
+			<span class="err"></span>
 			<button type="submit">Submit</button>
 		</form>
 	</main>

@@ -13,9 +13,8 @@ router.get('/gTest', checker.userType, userController.getGTest)
 router.post('/gTest', userController.postGTest)
 router.get('/g2Test', checker.userType, userController.getG2Test)
 router.post('/g2Test', userController.postG2Test)
-router.get('/editDetails/:licenseNo', userController.getEditDetails)
-router.post('/editDetails/:licenseNo', userController.postEditDetails)
-router.get('/delete/:licenseNo', userController.getDelete)
+router.get('/editDetails', userController.getEditDetails)
+router.post('/editDetails', userController.postEditDetails)
+router.get('/delete/:_id', userController.getDelete)
 
-// module.exports = router
 export default router

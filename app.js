@@ -27,6 +27,10 @@ app.use(
 	})
 )
 
+app.use('*', (req, res, next) => {
+	let loggedIn = req.session.loggedIn
+	next()
+})
 app.use('/', router)
 
 app.listen(3000, () => {

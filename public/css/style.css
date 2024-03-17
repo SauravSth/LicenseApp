@@ -35,6 +35,9 @@ main {
 	width: 100%;
 	padding: 10em 0;
 }
+.placeholder h3 {
+	color: teal;
+}
 
 .placeholder h1 {
 	font-size: 70px;

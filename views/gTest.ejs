@@ -2,22 +2,8 @@
 <body>
 	<%- include('./partials/nav')%>
 	<main>
-		<%- include('./partials/banner') %>
-
-		<!-- <form action="/gtest" method="post" id="g-form">
-			<h2>Get Details:</h2>
-			<label for="licenseno">License Number:</label>
-			<input
-				type="text"
-				name="licenseno"
-				id="licenseno"
-				placeholder="1234567890"
-			/>
-			<span class="err"></span>
-			<button>Submit</button>
-		</form> -->
-
-		<% if (exists && locals.userData) { %>
+		<%- include('./partials/banner') %> <% if (exists && locals.userData) {
+		%>
 		<table>
 			<thead>
 				<tr>
@@ -29,7 +15,9 @@
 					<th>Model</th>
 					<th>Year</th>
 					<th>Plate Number</th>
+					<% if (userData.licenseNo != 'DEFAULT') { %>
 					<th colspan="2">Profile Options</th>
+					<% } %>
 				</tr>
 			</thead>
 			<tbody>
@@ -42,20 +30,16 @@
 					<td><%= userData.carDetails.model %></td>
 					<td><%= userData.carDetails.year %></td>
 					<td><%= userData.carDetails.plateNo %></td>
+					<% if (userData.licenseNo != 'DEFAULT') { %>
 					<td>
-						<a
-							href="/editDetails/<%= userData.licenseNo %>"
-							class="edit"
-							>Edit</a
-						>
+						<a href="/editDetails" class="edit">Edit</a>
 					</td>
 					<td>
-						<a
-							href="/delete/<%= userData.licenseNo %>"
-							class="delete"
+						<a href="/delete/<%= userData._id %>" class="delete"
 							>Delete</a
 						>
 					</td>
+					<% } %>
 				</tr>
 			</tbody>
 		</table>
