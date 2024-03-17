@@ -198,7 +198,8 @@ class userController {
 		try {
 			console.log('ON DELETE')
 			await user.findOneAndDelete({ _id: req.session.userData._id })
-			// delete req.session.userData
+			delete req.session.userData
+			delete req.session.loggedIn
 			res.redirect('/')
 		} catch (e) {
 			console.log(e)
