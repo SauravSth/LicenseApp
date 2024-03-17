@@ -3,17 +3,22 @@ import bcrypt from 'bcrypt'
 
 class userController {
 	static getDashboard = (req, res) => {
+		let msg = req.session.dashboardMessage
+		delete req.session.dashboardMessage
 		res.render('dashboard', {
 			banner: 'Dashboard',
-			subheading: req.session.dashboardMessage,
+			subheading: msg,
 			loggedIn: req.session.loggedIn,
 			userData: req.session.userData,
 		})
 	}
 	static getLogin = (req, res) => {
+		let msg = req.session.incorrectPasswordMessage
+		delete req.session.incorrectPasswordMessage
+
 		res.render('Login', {
 			banner: 'Login',
-			subheading: req.session.incorrectPasswordMessage,
+			subheading: msg,
 			loggedIn: req.session.loggedIn,
 		})
 	}
@@ -38,7 +43,8 @@ class userController {
 					res.redirect('/login')
 				}
 			} else {
-				req.session.errorMessage = 'Sign Up first to Login.'
+				req.session.errorMessage =
+					'User does not exist. Sign Up first to Login.'
 				res.redirect('/signup')
 			}
 		} catch (e) {
@@ -46,9 +52,12 @@ class userController {
 		}
 	}
 	static getSignup = (req, res) => {
+		let msg = req.session.errorMessage
+		delete req.session.errorMessage
+
 		res.render('signup', {
 			banner: 'Signup',
-			subheading: req.session.errorMessage,
+			subheading: msg,
 			loggedIn: req.session.loggedIn,
 		})
 	}
@@ -79,12 +88,12 @@ class userController {
 		}
 	}
 	static getGTest = (req, res) => {
+		let msg = req.session.updateMessage
+		delete req.session.updateMessage
 		res.render('gTest', {
 			searchedData: req.session.userData,
 			banner: 'G-Test Page',
-			subheading:
-				req.session.updateMessage ||
-				'Please fill the G2 Form to update your details.',
+			subheading: msg || 'Your Test Details',
 			loggedIn: req.session.loggedIn,
 			userData: req.session.userData,
 		})
@@ -174,50 +183,7 @@ class userController {
 			console.log(e)
 		}
 	}
-	static getEditDetails = async (req, res) => {
-		try {
-			res.render('editDetails', {
-				searchedData: req.session.userData,
-				banner: 'Edit User Car Details',
-				subheading: '',
-				loggedIn: req.session.loggedIn,
-				userData: req.session.userData,
-			})
-		} catch (e) {
-			console.log(e)
-		}
-	}
-	static postEditDetails = async (req, res) => {
-		try {
-			const updatedData = req.body
-			let update = await user.findOneAndUpdate(
-				{ _id: req.session.userData._id },
-				{
-					$set: {
-						username: req.session.userData.username,
-						password: req.session.userData.password,
-						userType: req.session.userData.userType,
-						firstName: req.session.userData.firstname,
-						lastName: req.session.userData.lastname,
-						age: req.session.userData.age,
-						licenseNo: req.session.userData.licenseno,
-						carDetails: {
-							make: updatedData.make,
-							model: updatedData.model,
-							year: updatedData.year,
-							plateNo: updatedData.plate,
-						},
-					},
-				},
-				{ new: true }
-			)
-			req.session.userData = update
-			req.session.updateMessage = 'Data has successfully updated'
-			res.redirect('/gTest')
-		} catch (e) {
-			console.log(e)
-		}
-	}
+
 	static getDelete = async (req, res) => {
 		try {
 			await user.findOneAndDelete({ _id: req.session.userData._id })
