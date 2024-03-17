@@ -5,7 +5,7 @@ class userController {
 	static getDashboard = (req, res) => {
 		res.render('dashboard', {
 			banner: 'Dashboard',
-			subheading: req.session.message,
+			subheading: req.session.dashboardMessage,
 			loggedIn: req.session.loggedIn,
 			userData: req.session.userData,
 		})
@@ -13,7 +13,7 @@ class userController {
 	static getLogin = (req, res) => {
 		res.render('Login', {
 			banner: 'Login',
-			subheading: req.session.message,
+			subheading: req.session.incorrectPasswordMessage,
 			loggedIn: req.session.loggedIn,
 		})
 	}
@@ -30,18 +30,15 @@ class userController {
 				if (isMatched) {
 					req.session.userData = userData
 					req.session.loggedIn = true
-					res.render('dashboard', {
-						banner: 'Dashboard',
-						subheading: 'Successful Login',
-						loggedIn: req.session.loggedIn,
-						userData: req.session.userData,
-					})
+					req.session.dashboardMessage = 'Logged in successfully'
+					res.redirect('/')
 				} else {
-					req.session.message = 'Incorrect Password'
+					req.session.incorrectPasswordMessage =
+						'The password was not correct. Please try again.'
 					res.redirect('/login')
 				}
 			} else {
-				req.session.message = 'You need to Sign Up first.'
+				req.session.errorMessage = 'Sign Up first to Login.'
 				res.redirect('/signup')
 			}
 		} catch (e) {
@@ -51,13 +48,22 @@ class userController {
 	static getSignup = (req, res) => {
 		res.render('signup', {
 			banner: 'Signup',
-			subheading: req.session.message,
+			subheading: req.session.errorMessage,
 			loggedIn: req.session.loggedIn,
 		})
 	}
 	static postSignup = async (req, res) => {
 		try {
 			const data = req.body
+			const checkExistingUser = await user.findOne({
+				username: data.username,
+			})
+
+			if (checkExistingUser) {
+				req.session.errorMessage =
+					'This username already exists. Please enter another username.'
+				return res.redirect('/signup')
+			}
 			const hashedPassword = await bcrypt.hash(data.password, 10)
 
 			const newUser = new user({
@@ -74,23 +80,42 @@ class userController {
 	}
 	static getGTest = (req, res) => {
 		res.render('gTest', {
-			banner: 'G-Test',
-			subheading: 'Your Tests',
+			searchedData: req.session.userData,
+			banner: 'G-Test Page',
+			subheading:
+				req.session.updateMessage ||
+				'Please fill the G2 Form to update your details.',
 			loggedIn: req.session.loggedIn,
-			exists: true,
 			userData: req.session.userData,
 		})
 	}
 	static postGTest = async (req, res) => {
 		try {
-			let userData = await user.findOne({ _id: req.session.userData._id })
-
-			res.render('gTest', {
-				userData,
-				banner: 'G-Test',
-				subheading: 'Login for G-Test',
-				exists: true,
-			})
+			const updatedData = req.body
+			let update = await user.findOneAndUpdate(
+				{ _id: req.session.userData._id },
+				{
+					$set: {
+						username: req.session.userData.username,
+						password: req.session.userData.password,
+						userType: req.session.userData.userType,
+						firstName: req.session.userData.firstname,
+						lastName: req.session.userData.lastname,
+						age: req.session.userData.age,
+						licenseNo: req.session.userData.licenseno,
+						carDetails: {
+							make: updatedData.make,
+							model: updatedData.model,
+							year: updatedData.year,
+							plateNo: updatedData.plate,
+						},
+					},
+				},
+				{ new: true }
+			)
+			req.session.userData = update
+			req.session.updateMessage = 'Data has successfully updated'
+			res.redirect('/gTest')
 		} catch (e) {
 			console.log(e)
 		}
@@ -100,6 +125,8 @@ class userController {
 			req.session.userData.licenseNo == 'DEFAULT' ||
 			req.session.userData.licenseNo == null
 		) {
+			req.session.updateMessage =
+				'Please fill the G2 Form to update your details.'
 			res.render('g2Test', {
 				banner: 'G2-Test',
 				subheading: 'Book your G2-Test Here',
@@ -108,20 +135,15 @@ class userController {
 				userType: req.session.userData.userType,
 			})
 		} else {
-			res.render('editDetails', {
-				searchedData: req.session.userData,
-				banner: 'Edit User Car Details',
-				subheading: 'Edit your vehicle details',
-				loggedIn: req.session.loggedIn,
-				userData: req.session.userData,
-			})
+			req.session.updateMessage = 'Your Details Here.'
+			res.redirect('/gTest')
 		}
 	}
 	static postG2Test = async (req, res) => {
 		try {
 			const data = req.body
 
-			// let hashedLicenseNo = await bcrypt.hash(data.licenseno, 10)
+			let hashedLicenseNo = await bcrypt.hash(data.licenseno, 10)
 
 			let currentUserData = await user.findOneAndUpdate(
 				{ _id: req.session.userData._id },
@@ -134,7 +156,7 @@ class userController {
 						lastName: data.lastname,
 						age: data.age,
 						dateOfBirth: data.dob,
-						licenseNo: data.licenseno,
+						licenseNo: hashedLicenseNo,
 						carDetails: {
 							make: data.make,
 							model: data.model,
@@ -146,6 +168,7 @@ class userController {
 				{ new: true }
 			)
 			req.session.userData = currentUserData
+			req.session.updateMessage = 'Data has been updated successfully.'
 			res.redirect('/gTest')
 		} catch (e) {
 			console.log(e)
@@ -156,7 +179,7 @@ class userController {
 			res.render('editDetails', {
 				searchedData: req.session.userData,
 				banner: 'Edit User Car Details',
-				subheading: 'Edit your vehicle details',
+				subheading: '',
 				loggedIn: req.session.loggedIn,
 				userData: req.session.userData,
 			})
@@ -189,6 +212,7 @@ class userController {
 				{ new: true }
 			)
 			req.session.userData = update
+			req.session.updateMessage = 'Data has successfully updated'
 			res.redirect('/gTest')
 		} catch (e) {
 			console.log(e)
@@ -196,7 +220,6 @@ class userController {
 	}
 	static getDelete = async (req, res) => {
 		try {
-			console.log('ON DELETE')
 			await user.findOneAndDelete({ _id: req.session.userData._id })
 			delete req.session.userData
 			delete req.session.loggedIn

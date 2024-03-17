@@ -13,8 +13,8 @@ router.get('/gTest', checker.userType, userController.getGTest)
 router.post('/gTest', userController.postGTest)
 router.get('/g2Test', checker.userType, userController.getG2Test)
 router.post('/g2Test', userController.postG2Test)
-router.get('/editDetails', userController.getEditDetails)
-router.post('/editDetails', userController.postEditDetails)
+// router.get('/editDetails', userController.getEditDetails)
+// router.post('/editDetails', userController.postEditDetails)
 router.get('/delete/:_id', userController.getDelete)
 
 export default router

@@ -1,54 +1,90 @@
-<%- include('./partials/header') %>
-<body>
-	<%- include('./partials/nav')%>
-	<main>
-		<%- include('./partials/banner') %> <% if (exists && locals.userData) {
-		%>
-		<table>
-			<thead>
-				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Age</th>
-					<th>License Number</th>
-					<th>Make</th>
-					<th>Model</th>
-					<th>Year</th>
-					<th>Plate Number</th>
-					<% if (userData.licenseNo != 'DEFAULT') { %>
-					<th colspan="2">Profile Options</th>
-					<% } %>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><%= userData.firstName %></td>
-					<td><%= userData.lastName %></td>
-					<td><%= userData.age %></td>
-					<td><%= userData.licenseNo %></td>
-					<td><%= userData.carDetails.make %></td>
-					<td><%= userData.carDetails.model %></td>
-					<td><%= userData.carDetails.year %></td>
-					<td><%= userData.carDetails.plateNo %></td>
-					<% if (userData.licenseNo != 'DEFAULT') { %>
-					<td>
-						<a href="/editDetails" class="edit">Edit</a>
-					</td>
-					<td>
-						<a href="/delete/<%= userData._id %>" class="delete"
-							>Delete</a
-						>
-					</td>
-					<% } %>
-				</tr>
-			</tbody>
-		</table>
-		<% } else if (exists == false) {%>
-		<div class="search-result">
-			<h2>Given license number does not exist</h2>
-			<a href="/g2Test">Go To G2 Page</a>
-		</div>
-		<% } %>
-	</main>
-</body>
-<%- include('./partials/footer') %>
+<!DOCTYPE html>
+<html lang="en">
+	<%- include('./partials/header') %>
+	<body>
+		<%- include('./partials/nav')%>
+		<header></header>
+		<main>
+			<%- include('./partials/banner') %>
+			<section class="personal-info">
+				<form action="/gTest" method="post">
+					<h2>Personal Details:</h2>
+					<label for="firstname">First Name:</label>
+					<input
+						type="text"
+						name="firstname"
+						id="fname"
+						placeholder="First Name"
+						value="<%= searchedData.firstName %>"
+						disabled
+					/>
+					<label for="lastname">Last Name:</label>
+					<input
+						type="text"
+						name="lastname"
+						id="lname"
+						placeholder="Last Name"
+						value="<%= searchedData.lastName %>"
+						disabled
+					/>
+					<label for="age">Age:</label>
+					<input
+						type="text"
+						name="age"
+						id="age"
+						placeholder="Eg: 24"
+						value="<%= searchedData.age %>"
+						disabled
+					/>
+
+					<!-- <label for="licenseno">License Number:</label>
+					<input
+						type="text"
+						name="licenseno"
+						id="licenseno"
+						placeholder="1234567890"
+						value="<%= searchedData.licenseNo %>"
+						disabled
+					/> -->
+					<section class="car-info">
+						<h2>Car Details:</h2>
+						<label for="make">Make:</label>
+						<input
+							type="text"
+							name="make"
+							id="make"
+							placeholder="Make"
+							value="<%= searchedData.carDetails.make %>"
+						/>
+						<label for="model">Model:</label>
+						<input
+							type="text"
+							name="model"
+							id="model"
+							placeholder="Model"
+							value="<%= searchedData.carDetails.model %>"
+						/>
+						<label for="year">Year:</label>
+						<input
+							type="text"
+							name="year"
+							id="year"
+							placeholder="1998"
+							value="<%= searchedData.carDetails.year %>"
+						/>
+						<label for="plateno">Plate Number:</label>
+						<input
+							type="text"
+							name="plate"
+							id="plate"
+							placeholder="12345"
+							value="<%= searchedData.carDetails.plateNo %>"
+						/>
+					</section>
+					<button>Submit</button>
+				</form>
+			</section>
+		</main>
+		<%- include('./partials/footer') %>
+	</body>
+</html>

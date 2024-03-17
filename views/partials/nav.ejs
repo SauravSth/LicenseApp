@@ -6,10 +6,11 @@
 		<ul>
 			<% if (locals.loggedIn) { %>
 			<li><a href="/">Dashboard</a></li>
-			<% if (locals.userData.userType == 'driver') { %>
 			<li><a href="/g2Test">G2 Test</a></li>
 			<li><a href="/gTest">G Test</a></li>
-			<% } %>
+			<li>
+				<a href="/delete/<%= userData._id %>" class="delete">Delete</a>
+			</li>
 			<li>
 				<form action="/logout" method="post" class="logout">
 					<button type="submit">Logout</button>
