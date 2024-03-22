@@ -4,10 +4,14 @@
 	</div>
 	<div class="right">
 		<ul>
-			<% if (locals.loggedIn) { %>
 			<li><a href="/">Dashboard</a></li>
+			<% if (locals.loggedIn) { %> <% if (locals.userData.userType ==
+			'driver') { %>
 			<li><a href="/g2Test">G2 Test</a></li>
 			<li><a href="/gTest">G Test</a></li>
+			<% } else if (locals.userData.userType == 'admin') { %>
+			<li><a href="/appointment">Appointment</a></li>
+			<% } %>
 			<li>
 				<a href="/delete/<%= userData._id %>" class="delete">Delete</a>
 			</li>

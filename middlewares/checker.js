@@ -5,10 +5,18 @@ class checker {
 		}
 		next()
 	}
-	static userType = (req, res, next) => {
+	static userTypeDriver = (req, res, next) => {
 		if (req.session.userData.userType != 'driver') {
 			req.session.dashboardMessage =
 				'Access blocked. UserType is not Driver'
+			return res.redirect('/')
+		}
+		next()
+	}
+	static userTypeAdmin = (req, res, next) => {
+		if (req.session.userData.userType != 'admin') {
+			req.session.dashboardMessage =
+				'Access blocked. UserType is not Admin'
 			return res.redirect('/')
 		}
 		next()

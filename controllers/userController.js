@@ -203,6 +203,9 @@ class userController {
 			}
 		})
 	}
+	static getAppointment = (req, res) => {
+		res.render('appointment')
+	}
 }
 
 export default userController

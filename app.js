@@ -29,6 +29,8 @@ app.use(
 
 app.use('*', (req, res, next) => {
 	let loggedIn = req.session.loggedIn
+	let userData = req.session.userData
+	let userId = req.session.userData._id
 	next()
 })
 app.use('/', router)
