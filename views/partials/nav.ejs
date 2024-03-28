@@ -5,11 +5,10 @@
 	<div class="right">
 		<ul>
 			<li><a href="/">Dashboard</a></li>
-			<% if (locals.loggedIn) { %> <% if (locals.userData.userType ==
-			'driver') { %>
+			<% if (loggedIn) { %> <% if (userData.userType == 'driver') { %>
 			<li><a href="/g2Test">G2 Test</a></li>
 			<li><a href="/gTest">G Test</a></li>
-			<% } else if (locals.userData.userType == 'admin') { %>
+			<% } else if (userData.userType == 'admin') { %>
 			<li><a href="/appointment">Appointment</a></li>
 			<% } %>
 			<li>

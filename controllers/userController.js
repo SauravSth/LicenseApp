@@ -1,25 +1,23 @@
-import user from '../models/userModel.js'
+import { user, appointment } from '../models/userModel.js'
 import bcrypt from 'bcrypt'
 
 class userController {
 	static getDashboard = (req, res) => {
-		let msg = req.session.dashboardMessage
-		delete req.session.dashboardMessage
+		let msg = req.session.message
+		delete req.session.message
+
 		res.render('dashboard', {
 			banner: 'Dashboard',
 			subheading: msg,
-			loggedIn: req.session.loggedIn,
-			userData: req.session.userData,
 		})
 	}
 	static getLogin = (req, res) => {
-		let msg = req.session.incorrectPasswordMessage
-		delete req.session.incorrectPasswordMessage
+		let msg = req.session.message
+		delete req.session.message
 
 		res.render('Login', {
 			banner: 'Login',
 			subheading: msg,
-			loggedIn: req.session.loggedIn,
 		})
 	}
 	static postLogin = async (req, res) => {
@@ -35,15 +33,15 @@ class userController {
 				if (isMatched) {
 					req.session.userData = userData
 					req.session.loggedIn = true
-					req.session.dashboardMessage = 'Logged in successfully'
+					req.session.message = 'Logged in successfully'
 					res.redirect('/')
 				} else {
-					req.session.incorrectPasswordMessage =
+					req.session.message =
 						'The password was not correct. Please try again.'
 					res.redirect('/login')
 				}
 			} else {
-				req.session.errorMessage =
+				req.session.message =
 					'User does not exist. Sign Up first to Login.'
 				res.redirect('/signup')
 			}
@@ -52,13 +50,12 @@ class userController {
 		}
 	}
 	static getSignup = (req, res) => {
-		let msg = req.session.errorMessage
-		delete req.session.errorMessage
+		let msg = req.session.message
+		delete req.session.message
 
 		res.render('signup', {
 			banner: 'Signup',
 			subheading: msg,
-			loggedIn: req.session.loggedIn,
 		})
 	}
 	static postSignup = async (req, res) => {
@@ -69,7 +66,7 @@ class userController {
 			})
 
 			if (checkExistingUser) {
-				req.session.errorMessage =
+				req.session.message =
 					'This username already exists. Please enter another username.'
 				return res.redirect('/signup')
 			}
@@ -88,14 +85,12 @@ class userController {
 		}
 	}
 	static getGTest = (req, res) => {
-		let msg = req.session.updateMessage
-		delete req.session.updateMessage
+		let msg = req.session.message
+		delete req.session.message
 		res.render('gTest', {
 			searchedData: req.session.userData,
 			banner: 'G-Test Page',
 			subheading: msg || 'Your Test Details',
-			loggedIn: req.session.loggedIn,
-			userData: req.session.userData,
 		})
 	}
 	static postGTest = async (req, res) => {
@@ -123,7 +118,7 @@ class userController {
 				{ new: true }
 			)
 			req.session.userData = update
-			req.session.updateMessage = 'Data has successfully updated'
+			req.session.message = 'Data has successfully updated'
 			res.redirect('/gTest')
 		} catch (e) {
 			console.log(e)
@@ -134,17 +129,15 @@ class userController {
 			req.session.userData.licenseNo == 'DEFAULT' ||
 			req.session.userData.licenseNo == null
 		) {
-			req.session.updateMessage =
+			req.session.message =
 				'Please fill the G2 Form to update your details.'
 			res.render('g2Test', {
 				banner: 'G2-Test',
 				subheading: 'Book your G2-Test Here',
-				loggedIn: req.session.loggedIn,
-				userData: req.session.userData,
 				userType: req.session.userData.userType,
 			})
 		} else {
-			req.session.updateMessage = 'Your Details Here.'
+			req.session.message = 'Your Details Here.'
 			res.redirect('/gTest')
 		}
 	}
@@ -177,7 +170,7 @@ class userController {
 				{ new: true }
 			)
 			req.session.userData = currentUserData
-			req.session.updateMessage = 'Data has been updated successfully.'
+			req.session.message = 'Data has been updated successfully.'
 			res.redirect('/gTest')
 		} catch (e) {
 			console.log(e)
@@ -204,7 +197,12 @@ class userController {
 		})
 	}
 	static getAppointment = (req, res) => {
-		res.render('appointment')
+		let msg = req.session.message
+		delete req.session.message
+		res.render('appointment', {
+			banner: 'Appointment Page',
+			subheading: msg,
+		})
 	}
 }
 

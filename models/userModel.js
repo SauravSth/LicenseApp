@@ -1,8 +1,8 @@
-// const mongoose = require('mongoose')
 import mongoose from 'mongoose'
+import {} from 'dotenv/config'
 
-const URI =
-	'mongodb+srv://Saurav:naruxhina@cluster0.wuw4gfs.mongodb.net/GLicense?retryWrites=true&w=majority'
+const URI = process.env.URI
+// 'mongodb+srv://Saurav:naruxhina@cluster0.wuw4gfs.mongodb.net/GLicense?retryWrites=true&w=majority'
 
 mongoose
 	.connect(URI)
@@ -67,7 +67,21 @@ const userSchema = mongoose.Schema({
 	},
 })
 
-const userModel = mongoose.model('User', userSchema)
+const appointmentSchema = mongoose.Schema({
+	date: {
+		type: Date,
+		required: true,
+	},
+	time: {
+		type: Date,
+		required: true,
+	},
+	isAvailable: {
+		type: Boolean,
+	},
+})
 
-// module.exports = userModel
-export default userModel
+const user = mongoose.model('User', userSchema)
+const appointment = mongoose.model('Appointment', appointmentSchema)
+
+export { user, appointment }

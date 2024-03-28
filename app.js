@@ -2,11 +2,15 @@ import express from 'express'
 import router from './routes/index.js'
 import MongoStore from 'connect-mongo'
 import session from 'express-session'
+import {} from 'dotenv/config'
 
 const app = express()
 
-const URI =
-	'mongodb+srv://Saurav:naruxhina@cluster0.wuw4gfs.mongodb.net/GLicense?retryWrites=true&w=majority'
+global.loggedIn = false
+global.userData = {}
+
+const URI = process.env.URI
+// 'mongodb+srv://Saurav:naruxhina@cluster0.wuw4gfs.mongodb.net/GLicense?retryWrites=true&w=majority'
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
@@ -28,15 +32,16 @@ app.use(
 )
 
 app.use('*', (req, res, next) => {
-	let loggedIn = req.session.loggedIn
-	let userData = req.session.userData
-	let userId = req.session.userData._id
+	loggedIn = req.session.loggedIn
+	userData = req.session.userData
 	next()
 })
 app.use('/', router)
 
-app.listen(3000, () => {
-	console.log('Listening on PORT 3000')
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT, () => {
+	console.log(`Listening on PORT ${PORT}`)
 })
 
 export default session
