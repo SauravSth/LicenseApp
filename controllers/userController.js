@@ -157,6 +157,10 @@ class userController {
 	static postG2Test = async (req, res) => {
 		try {
 			const data = req.body
+			const appointmentData = await appointment.findOne({
+				date: data.appointmentDate,
+				time: data.appointmentTime,
+			})
 
 			let hashedLicenseNo = await bcrypt.hash(data.licenseno, 10)
 
@@ -178,6 +182,16 @@ class userController {
 							year: data.year,
 							plateNo: data.plate,
 						},
+						appointment: appointmentData._id,
+					},
+				},
+				{ new: true }
+			)
+			await appointment.findOneAndUpdate(
+				{ _id: appointmentData._id },
+				{
+					$set: {
+						isAvailable: false,
 					},
 				},
 				{ new: true }
