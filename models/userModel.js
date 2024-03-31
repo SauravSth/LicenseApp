@@ -1,13 +1,4 @@
 import mongoose from 'mongoose'
-import {} from 'dotenv/config'
-
-const URI = process.env.URI
-// 'mongodb+srv://Saurav:naruxhina@cluster0.wuw4gfs.mongodb.net/GLicense?retryWrites=true&w=majority'
-
-mongoose
-	.connect(URI)
-	.then(() => console.log('Connected to DB'))
-	.catch((e) => console.log(e))
 
 const userSchema = mongoose.Schema({
 	username: {
@@ -65,23 +56,12 @@ const userSchema = mongoose.Schema({
 			default: 'DEFAULT',
 		},
 	},
-})
-
-const appointmentSchema = mongoose.Schema({
-	date: {
-		type: Date,
-		required: true,
-	},
-	time: {
-		type: Date,
-		required: true,
-	},
-	isAvailable: {
-		type: Boolean,
+	appointment: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Appointment',
 	},
 })
 
 const user = mongoose.model('User', userSchema)
-const appointment = mongoose.model('Appointment', appointmentSchema)
 
-export { user, appointment }
+export default user

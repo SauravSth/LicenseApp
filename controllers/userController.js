@@ -1,4 +1,5 @@
-import { user, appointment } from '../models/userModel.js'
+import user from '../models/userModel.js'
+import appointment from '../models/appointmentModel.js'
 import bcrypt from 'bcrypt'
 
 class userController {
@@ -84,11 +85,16 @@ class userController {
 			console.log(e)
 		}
 	}
-	static getGTest = (req, res) => {
+	static getGTest = async (req, res) => {
 		let msg = req.session.message
 		delete req.session.message
+
+		const userData = await user
+			.findOne({ _id: req.session.userData._id })
+			.populate('appointment')
+
 		res.render('gTest', {
-			searchedData: req.session.userData,
+			searchedData: userData,
 			banner: 'G-Test Page',
 			subheading: msg || 'Your Test Details',
 		})
@@ -96,23 +102,30 @@ class userController {
 	static postGTest = async (req, res) => {
 		try {
 			const updatedData = req.body
+			let appointmentDetails = await appointment.findOne({
+				date: updatedData.appointmentDate,
+				time: updatedData.appointmentTime,
+			})
 			let update = await user.findOneAndUpdate(
 				{ _id: req.session.userData._id },
 				{
 					$set: {
-						username: req.session.userData.username,
-						password: req.session.userData.password,
-						userType: req.session.userData.userType,
-						firstName: req.session.userData.firstname,
-						lastName: req.session.userData.lastname,
-						age: req.session.userData.age,
-						licenseNo: req.session.userData.licenseno,
 						carDetails: {
 							make: updatedData.make,
 							model: updatedData.model,
 							year: updatedData.year,
 							plateNo: updatedData.plate,
 						},
+						appointment: appointmentDetails._id,
+					},
+				},
+				{ new: true }
+			)
+			await appointment.findOneAndUpdate(
+				{ _id: appointmentDetails._id },
+				{
+					$set: {
+						isAvailable: false,
 					},
 				},
 				{ new: true }
@@ -194,14 +207,6 @@ class userController {
 			} else {
 				res.redirect('/login')
 			}
-		})
-	}
-	static getAppointment = (req, res) => {
-		let msg = req.session.message
-		delete req.session.message
-		res.render('appointment', {
-			banner: 'Appointment Page',
-			subheading: msg,
 		})
 	}
 }

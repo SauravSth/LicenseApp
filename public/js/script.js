@@ -71,10 +71,56 @@ const resetErrors = (array) => {
 	})
 }
 
+const getTimeSlots = async (date) => {
+	$('#appointment-time').innerHTML = ''
+	let appointmentData = await fetch(`/getTimeSlots`)
+	let data = await appointmentData.json()
+
+	data = data.filter((d) => d.date == date)
+	for (let time of data) {
+		let timeSlot = document.createElement('option')
+		timeSlot.innerHTML = time.time
+		if (time.isAvailable != true) {
+			timeSlot.disabled = true
+		}
+		$('#appointment-time').appendChild(timeSlot)
+	}
+}
+
+const getAdminTimeSlots = async (date) => {
+	let times = document.querySelectorAll('#admin-time-slot option')
+	for (let time of times) {
+		time.disabled = false
+	}
+
+	let appointmentData = await fetch(`/getTimeSlots`)
+	let data = await appointmentData.json()
+
+	for (let time of times) {
+		for (let i = 0; i < data.length; i++) {
+			if (time.value == data[i].time && data[i].date == date) {
+				time.disabled = true
+			}
+		}
+	}
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 	if ($('#g2-form')) $('#g2-form').addEventListener('submit', validateForm)
+
 	if ($('#signup-form'))
 		$('#signup-form').addEventListener('submit', validateSignup)
+
 	if ($('#login-form'))
 		$('#login-form').addEventListener('submit', validateLogin)
+
+	if ($('#appointment-date'))
+		$('#appointment-date').addEventListener('change', () =>
+			getTimeSlots($('#appointment-date').value)
+		)
+
+	if ($('#admin-appointment-date'))
+		$('#admin-appointment-date').addEventListener('change', () =>
+			getAdminTimeSlots($('#admin-appointment-date').value)
+		)
 })

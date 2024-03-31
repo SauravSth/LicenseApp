@@ -37,15 +37,6 @@
 						disabled
 					/>
 
-					<!-- <label for="licenseno">License Number:</label>
-					<input
-						type="text"
-						name="licenseno"
-						id="licenseno"
-						placeholder="1234567890"
-						value="<%= searchedData.licenseNo %>"
-						disabled
-					/> -->
 					<section class="car-info">
 						<h2>Car Details:</h2>
 						<label for="make">Make:</label>
@@ -72,7 +63,7 @@
 							placeholder="1998"
 							value="<%= searchedData.carDetails.year %>"
 						/>
-						<label for="plateno">Plate Number:</label>
+						<label for="plate">Plate Number:</label>
 						<input
 							type="text"
 							name="plate"
@@ -81,6 +72,16 @@
 							value="<%= searchedData.carDetails.plateNo %>"
 						/>
 					</section>
+					<label for="appointment-date">Appointment Date</label>
+					<input
+						type="date"
+						name="appointmentDate"
+						id="appointment-date"
+					/>
+					<label for="appointment-time">Appointment Time</label>
+					<select name="appointmentTime" id="appointment-time">
+						<!-- holder -->
+					</select>
 					<button>Submit</button>
 				</form>
 			</section>

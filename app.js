@@ -3,6 +3,7 @@ import router from './routes/index.js'
 import MongoStore from 'connect-mongo'
 import session from 'express-session'
 import {} from 'dotenv/config'
+import mongoose from 'mongoose'
 
 const app = express()
 
@@ -10,7 +11,11 @@ global.loggedIn = false
 global.userData = {}
 
 const URI = process.env.URI
-// 'mongodb+srv://Saurav:naruxhina@cluster0.wuw4gfs.mongodb.net/GLicense?retryWrites=true&w=majority'
+
+mongoose
+	.connect(URI)
+	.then(() => console.log('Connected to DB'))
+	.catch((e) => console.log(e))
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
