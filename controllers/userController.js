@@ -93,6 +93,11 @@ class userController {
 			.findOne({ _id: req.session.userData._id })
 			.populate('appointment')
 
+		if (userData.licenseNo == 'DEFAULT') {
+			req.session.message = 'Please fill the G2 form first'
+			return res.redirect('/g2Test')
+		}
+
 		res.render('gTest', {
 			searchedData: userData,
 			banner: 'G-Test Page',
@@ -102,10 +107,7 @@ class userController {
 	static postGTest = async (req, res) => {
 		try {
 			const updatedData = req.body
-			let appointmentDetails = await appointment.findOne({
-				date: updatedData.appointmentDate,
-				time: updatedData.appointmentTime,
-			})
+
 			let update = await user.findOneAndUpdate(
 				{ _id: req.session.userData._id },
 				{
@@ -116,20 +118,11 @@ class userController {
 							year: updatedData.year,
 							plateNo: updatedData.plate,
 						},
-						appointment: appointmentDetails._id,
 					},
 				},
 				{ new: true }
 			)
-			await appointment.findOneAndUpdate(
-				{ _id: appointmentDetails._id },
-				{
-					$set: {
-						isAvailable: false,
-					},
-				},
-				{ new: true }
-			)
+
 			req.session.userData = update
 			req.session.message = 'Data has successfully updated'
 			res.redirect('/gTest')
@@ -142,11 +135,11 @@ class userController {
 			req.session.userData.licenseNo == 'DEFAULT' ||
 			req.session.userData.licenseNo == null
 		) {
-			req.session.message =
-				'Please fill the G2 Form to update your details.'
+			const msg = req.session.message
+			delete req.session.message
 			res.render('g2Test', {
 				banner: 'G2-Test',
-				subheading: 'Book your G2-Test Here',
+				subheading: msg || 'Book your G2-Test Here',
 				userType: req.session.userData.userType,
 			})
 		} else {

@@ -119,8 +119,10 @@ button {
 form h2 {
 	margin-bottom: 10px;
 }
-input:disabled {
+input:disabled,
+select:disabled {
 	background-color: lightgray;
+	color: gray;
 }
 .search-result {
 	margin: 1em auto;

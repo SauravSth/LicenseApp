@@ -78,9 +78,14 @@
 						name="appointmentDate"
 						id="appointment-date"
 						value="<%= searchedData.appointment.date %>"
+						disabled
 					/>
 					<label for="appointment-time">Appointment Time</label>
-					<select name="appointmentTime" id="appointment-time">
+					<select
+						name="appointmentTime"
+						id="appointment-time"
+						disabled
+					>
 						<!-- holder -->
 						<% if (searchedData.appointment.time) { %>
 						<option value="<%= searchedData.appointment.time %>">
