@@ -29,9 +29,12 @@ main {
 	min-height: 70vh;
 }
 .placeholder {
+	background-image: url('/images/banner.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0px -5em;
 	text-align: center;
 	color: white;
-	background-color: #022140;
 	width: 100%;
 	padding: 10em 0;
 }
@@ -40,6 +43,8 @@ main {
 }
 
 .placeholder h1 {
+	-webkit-text-stroke-color: #022140;
+	-webkit-text-stroke-width: 1.5px;
 	font-size: 70px;
 	margin-bottom: 20px;
 }
