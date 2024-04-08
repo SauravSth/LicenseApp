@@ -44,7 +44,7 @@ main {
 
 .placeholder h1 {
 	-webkit-text-stroke-color: #022140;
-	-webkit-text-stroke-width: 1.5px;
+	-webkit-text-stroke-width: 2px;
 	font-size: 70px;
 	margin-bottom: 20px;
 }
