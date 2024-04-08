@@ -39,7 +39,8 @@ main {
 	padding: 10em 0;
 }
 .placeholder h3 {
-	color: darkorange;
+	font-size: 2rem;
+	color: green;
 }
 
 .placeholder h1 {
