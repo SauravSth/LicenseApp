@@ -3,5 +3,66 @@
 	<%- include('./partials/nav')%>
 
 	<main><%- include('./partials/banner') %></main>
+	<% for(let i=0;i< user1.length;i++){ %>
+	<% if(user1[i].userType =="driver" && user1[i].testResult.comment=="DEFAULT"){ %>
+	<table class="table table-striped table-success" >
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Make</th>
+			<th>Model</th>
+			<th>Year</th>
+			<th>Plate Number</th>
+			<th>Result</th>
+			<th>Comments</th>
+			<th>update</th>
+		</tr>
+		 
+		  <tr>
+			<td><%= user1[i].firstName       %></td>
+	
+			<td><%= user1[i].lastName      %></td>
+	
+			<td><%= user1[i].carDetails.make       %></td>
+	
+			<td><%= user1[i].carDetails.model       %></td>
+
+			<td><%= user1[i].carDetails.year       %></td>
+
+			<td><%= user1[i].carDetails.plateNo       %></td>
+
+			<td>
+				<select name="result" id="result">
+					<option value="Fail">Fail</option>
+					<option value="Pass">Pass</option>
+				  </select>
+			</td>
+			<td>
+				<input type="text" id="comments" name="comments">
+			</td>
+			<td><button onclick="updateUser('<%= user1[i].id %>')">Submit</button></td>
+		  </tr>
+		</table>
+		<% } %>
+		<% } %>
 </body>
+<script>
+	const updateUser= (id)=>{
+      const result=document.getElementById("result").value;
+	  const comment=document.getElementById("comments").value;
+	  let sendResult=false;
+	  if(result=="Pass")
+	  {
+		sendResult=true
+	  }
+	  fetch(`/test?userId=${id}&result=${sendResult}&comment=${comment}`, {
+    method: "GET",
+    headers: {
+        "Content-type": "application/json; charset=UTF-8"
+    }
+}).then((response) => response.json())
+  .then((json) => console.log(json));
+  location.reload();
+}
+</script>
 <%- include('./partials/footer') %>

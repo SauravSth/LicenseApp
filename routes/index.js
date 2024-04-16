@@ -30,6 +30,7 @@ router.get(
 )
 router.post('/appointment', appointmentController.postAppointment)
 router.get('/getTimeSlots', appointmentController.getTimeSlots)
+router.get('/test', examinerController.getTest)
 
 // Examiner Routes
 router.get('/examiner', examinerController.getExaminer)

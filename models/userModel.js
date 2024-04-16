@@ -61,12 +61,12 @@ const userSchema = mongoose.Schema({
 		ref: 'Appointment',
 	},
 	testType: {
-		type: String,
-		required: true,
+		type: String
 	},
 	testResult: {
 		comment: {
 			type: String,
+			default: 'DEFAULT'
 		},
 		result: {
 			type: Boolean,

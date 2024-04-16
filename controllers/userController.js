@@ -112,6 +112,7 @@ class userController {
 				{ _id: req.session.userData._id },
 				{
 					$set: {
+						testType: "g",
 						carDetails: {
 							make: updatedData.make,
 							model: updatedData.model,
@@ -169,6 +170,7 @@ class userController {
 						age: data.age,
 						dateOfBirth: data.dob,
 						licenseNo: hashedLicenseNo,
+						testType: "g2",
 						carDetails: {
 							make: data.make,
 							model: data.model,
