@@ -19,6 +19,13 @@ class checker {
 		}
 		next()
 	}
+	static userTypeExaminer = (req, res, next) => {
+		if (req.session.userData.userType != 'examiner') {
+			req.session.message = 'Access blocked. UserType is not Examiner'
+			return res.redirect('/')
+		}
+		next()
+	}
 }
 
 export default checker

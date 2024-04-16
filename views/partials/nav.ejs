@@ -10,6 +10,8 @@
 			<li><a href="/gTest">G Test</a></li>
 			<% } else if (userData.userType == 'admin') { %>
 			<li><a href="/appointment">Appointment</a></li>
+			<% } else if (userData.userType == 'examiner') { %>
+			<li><a href="/examiner">Examiner</a></li>
 			<% } %>
 			<li>
 				<a href="/delete/<%= userData._id %>" class="delete">Delete</a>

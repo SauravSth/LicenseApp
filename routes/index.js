@@ -3,6 +3,7 @@ const router = express.Router()
 import userController from '../controllers/userController.js'
 import appointmentController from '../controllers/appointmentController.js'
 import checker from '../middlewares/checker.js'
+import examinerController from '../controllers/examinerController.js'
 
 // Dashboard Route
 router.get('/', userController.getDashboard)
@@ -29,5 +30,8 @@ router.get(
 )
 router.post('/appointment', appointmentController.postAppointment)
 router.get('/getTimeSlots', appointmentController.getTimeSlots)
+
+// Examiner Routes
+router.get('/examiner', examinerController.getExaminer)
 
 export default router
