@@ -60,6 +60,18 @@ const userSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Appointment',
 	},
+	testType: {
+		type: String,
+		required: true,
+	},
+	testResult: {
+		comment: {
+			type: String,
+		},
+		result: {
+			type: Boolean,
+		},
+	},
 })
 
 const user = mongoose.model('User', userSchema)
