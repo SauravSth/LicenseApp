@@ -43,8 +43,11 @@
 						<td><%= row.carDetails.model %></td>
 						<td><%= row.carDetails.year %></td>
 						<td><%= row.carDetails.plateNo %></td>
-						<td><%= row.testType %></td>
-						<td><%= row.testResult.result %></td>
+						<td><%= row.testType.toUpperCase() %></td>
+						<td>
+							<% if(row.testResult.result) { %> Passed <% } else {
+							%>Failed <% } %>
+						</td>
 						<% if (row.testResult.result == true) { %>
 						<td><button>Print License</button></td>
 						<% } %>

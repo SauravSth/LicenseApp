@@ -14,10 +14,9 @@ class candidateController {
 			testType: 'g',
 			'testResult.result': option,
 		})
-		let msg = option ? 'Passed Data' : 'Failed Data'
 		res.render('candidate', {
 			banner: 'Candidate Information',
-			subheading: '' ?? msg,
+			subheading: '',
 			candidateData: candidateData,
 		})
 	}
