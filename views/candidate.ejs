@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include('./partials/header') %>
+	<body>
+		<%- include('./partials/nav')%>
+		<header></header>
+		<main>
+			<%- include('./partials/banner') %>
+			<form action="/candidate" method="post">
+				<label for="candidateType">Candidate Type: </label>
+				<select name="candidateType" id="candidateType">
+					<option value="1">Passed Candidates</option>
+					<option value="0">Failed Candidates</option>
+				</select>
+				<button type="submit">Get Data</button>
+			</form>
+			<% if (locals.candidateData) { %>
+			<table>
+				<thead>
+					<tr>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Age</th>
+						<th>Car Make</th>
+						<th>Car Model</th>
+						<th>Car Year</th>
+						<th>Car Plate Number</th>
+						<th>Test Type</th>
+						<th>Test Result</th>
+						<% if (locals.candidateData[0].testResult.result == 1) {
+						%>
+						<th>Create License</th>
+						<% } %>
+					</tr>
+				</thead>
+				<tbody>
+					<% candidateData.forEach(row => { %>
+					<tr>
+						<td><%= row.firstName %></td>
+						<td><%= row.LastName %></td>
+						<td><%= row.age %></td>
+						<td><%= row.carDetails.make %></td>
+						<td><%= row.carDetails.model %></td>
+						<td><%= row.carDetails.year %></td>
+						<td><%= row.carDetails.plateNo %></td>
+						<td><%= row.testType %></td>
+						<td><%= row.testResult.result %></td>
+					</tr>
+					<% }); %>
+				</tbody>
+			</table>
+			<% } %>
+		</main>
+		<%- include('./partials/footer') %>
+	</body>
+</html>

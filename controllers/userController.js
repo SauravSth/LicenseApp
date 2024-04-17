@@ -218,6 +218,9 @@ class userController {
 			}
 		})
 	}
+	static getResults = (req, res) => {
+		res.render('result', { banner: 'Test Results', subheading: '' ?? msg })
+	}
 }
 
 export default userController
