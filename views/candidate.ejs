@@ -9,8 +9,8 @@
 			<form action="/candidate" method="post">
 				<label for="candidateType">Candidate Type: </label>
 				<select name="candidateType" id="candidateType">
-					<option value="1">Passed Candidates</option>
-					<option value="0">Failed Candidates</option>
+					<option value="true">Passed Candidates</option>
+					<option value="false">Failed Candidates</option>
 				</select>
 				<button type="submit">Get Data</button>
 			</form>
@@ -27,8 +27,8 @@
 						<th>Car Plate Number</th>
 						<th>Test Type</th>
 						<th>Test Result</th>
-						<% if (locals.candidateData[0].testResult.result == 1) {
-						%>
+						<% if (candidateData.length > 0 &&
+						candidateData[0].testResult.result == true) { %>
 						<th>Create License</th>
 						<% } %>
 					</tr>
@@ -37,7 +37,7 @@
 					<% candidateData.forEach(row => { %>
 					<tr>
 						<td><%= row.firstName %></td>
-						<td><%= row.LastName %></td>
+						<td><%= row.lastName %></td>
 						<td><%= row.age %></td>
 						<td><%= row.carDetails.make %></td>
 						<td><%= row.carDetails.model %></td>
@@ -45,6 +45,9 @@
 						<td><%= row.carDetails.plateNo %></td>
 						<td><%= row.testType %></td>
 						<td><%= row.testResult.result %></td>
+						<% if (row.testResult.result == true) { %>
+						<td><button>Print License</button></td>
+						<% } %>
 					</tr>
 					<% }); %>
 				</tbody>

@@ -112,7 +112,7 @@ class userController {
 				{ _id: req.session.userData._id },
 				{
 					$set: {
-						testType: "g",
+						testType: 'g',
 						carDetails: {
 							make: updatedData.make,
 							model: updatedData.model,
@@ -170,7 +170,7 @@ class userController {
 						age: data.age,
 						dateOfBirth: data.dob,
 						licenseNo: hashedLicenseNo,
-						testType: "g2",
+						testType: 'g2',
 						carDetails: {
 							make: data.make,
 							model: data.model,
@@ -218,7 +218,7 @@ class userController {
 			}
 		})
 	}
-	static getResults = (req, res) => {
+	static getResults = async (req, res) => {
 		res.render('result', { banner: 'Test Results', subheading: '' ?? msg })
 	}
 }

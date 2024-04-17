@@ -8,13 +8,13 @@ class candidateController {
 		})
 	}
 	static postCandidate = async (req, res) => {
-		const option = req.body.candidateType
+		const option = JSON.parse(req.body.candidateType)
 
 		const candidateData = await user.find({
-			testType: 'G',
-			testResult: { result: option },
+			testType: 'g',
+			'testResult.result': option,
 		})
-
+		let msg = option ? 'Passed Data' : 'Failed Data'
 		res.render('candidate', {
 			banner: 'Candidate Information',
 			subheading: '' ?? msg,

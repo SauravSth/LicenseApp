@@ -4,7 +4,18 @@
 	<body>
 		<%- include('./partials/nav')%>
 		<header></header>
-		<main><%- include('./partials/banner') %></main>
+		<main>
+			<%- include('./partials/banner') %>
+			<div class="result-wrapper">
+				<h2>
+					<% if (userData.testResult.result) { %> Congrats you have
+					passed the test. <% } else { %> Sorry you have failed.<% }
+					%>
+				</h2>
+				<p>Comments from the examiner:</p>
+				<p><%= userData.testResult.comment %></p>
+			</div>
+		</main>
 		<%- include('./partials/footer') %>
 	</body>
 </html>

@@ -199,3 +199,8 @@ td a {
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
+
+.result-wrapper {
+	margin-top: 3em;
+	text-align: center;
+}

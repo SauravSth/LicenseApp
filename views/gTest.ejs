@@ -73,20 +73,38 @@
 						/>
 					</section>
 					<label for="appointment-date">Appointment Date</label>
+					<% if (searchedData.testType == 'g2') { %>
+					<input
+						type="date"
+						name="appointmentDate"
+						id="appointment-date"
+					/>
+					<span class="err"></span>
+
+					<label for="appointment-time">Appointment Time</label>
+					<select name="appointmentTime" id="appointment-time">
+						<!-- holder -->
+					</select>
+					<span class="err"></span>
+					<% } else { %>
 					<input
 						type="date"
 						name="appointmentDate"
 						id="appointment-date"
 						value="<%= searchedData.appointment.date %>"
 					/>
+					<span class="err"></span>
+
 					<label for="appointment-time">Appointment Time</label>
 					<select name="appointmentTime" id="appointment-time">
-						<% if (searchedData.appointment.time) { %>
 						<option value="<%= searchedData.appointment.time %>">
 							<%= searchedData.appointment.time %>
 						</option>
-						<% } %>
+						<!-- holder -->
 					</select>
+					<span class="err"></span>
+					<% } %>
+
 					<button>Submit</button>
 				</form>
 			</section>
