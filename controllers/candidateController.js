@@ -14,7 +14,7 @@ class candidateController {
 			testType: 'G',
 			testResult: { result: option },
 		})
-
+        console.log("candidate data"+candidateData);
 		res.render('candidate', {
 			banner: 'Candidate Information',
 			subheading: '' ?? msg,

@@ -24,7 +24,7 @@ class examinerController {
 							result: comm.result,
 					} 
 				}
-			})
+				})
 		    }catch(e){
 			console.log("db not updated "+e)
 		}

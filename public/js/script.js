@@ -104,6 +104,23 @@ const getAdminTimeSlots = async (date) => {
 		}
 	}
 }
+const updateUser = (id) => {
+	const result = document.getElementById('result')
+	const comment = document.getElementById('comments')
+	fetch(`/examiner`, {
+		method: 'post',
+		body: JSON.stringify({
+			userId: id,
+			result: result,
+			comment: comment,
+		}),
+		headers: {
+			'Content-type': 'application/json; charset=UTF-8',
+		},
+	})
+		.then((response) => response.json())
+		.then((json) => console.log(json))
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 	if ($('#g2-form')) $('#g2-form').addEventListener('submit', validateForm)
@@ -124,21 +141,3 @@ document.addEventListener('DOMContentLoaded', () => {
 			getAdminTimeSlots($('#admin-appointment-date').value)
 		)
 })
-
-const updateUser= (id)=>{
-      const result=document.getElementById("result");
-	  const comment=document.getElementById("comments");
-	  fetch(`/examiner`,{
-		method: "post",
-		body: JSON.stringify({
-			userId: id,
-			result: result,
-			comment: comment
-		}),
-		headers: {
-		  "Content-type": "application/json; charset=UTF-8"
-		}
-	  }).then((response) => response.json())
-	  .then((json) => console.log(json));
-
-}
