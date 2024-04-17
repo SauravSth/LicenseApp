@@ -16,7 +16,7 @@ class userController {
 		let msg = req.session.message
 		delete req.session.message
 
-		res.render('Login', {
+		res.render('login', {
 			banner: 'Login',
 			subheading: msg,
 		})

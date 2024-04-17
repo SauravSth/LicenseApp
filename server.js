@@ -11,7 +11,7 @@ global.loggedIn = false
 global.userData = {}
 import bodyParser from 'body-parser'
 
-const URI = process.env.URI || "mongodb+srv://dharmeshwayne:mB5ud4buFCiKElbu@cluster0.bqcmuyb.mongodb.net/Dharmesh_assignment?retryWrites=true&w=majority"
+const URI = process.env.URI
 
 mongoose
 	.connect(URI)
@@ -20,7 +20,7 @@ mongoose
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true }))
 
 const session_store = MongoStore.create({
