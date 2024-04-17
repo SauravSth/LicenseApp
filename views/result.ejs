@@ -7,6 +7,10 @@
 		<main>
 			<%- include('./partials/banner') %>
 			<div class="result-wrapper">
+				<% if (userData.testResult.comment == "DEFAULT") { %>
+				<h2>PROCESSING</h2>
+				<p>Wait for an examiner to process your test.</p>
+				<% } else { %>
 				<h2>
 					<% if (userData.testResult.result) { %> Congrats you have
 					passed the test. <% } else { %> Sorry you have failed.<% }
@@ -14,6 +18,7 @@
 				</h2>
 				<p>Comments from the examiner:</p>
 				<p><%= userData.testResult.comment %></p>
+				<% } %>
 			</div>
 		</main>
 		<%- include('./partials/footer') %>
