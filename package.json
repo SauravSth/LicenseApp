@@ -2,10 +2,9 @@
 	"name": "assignment1",
 	"version": "1.0.0",
 	"description": "",
-	"main": "app.js",
+	"main": "server.js",
 	"scripts": {
-		"start": "node app.js",
-		"dev": "nodemon app.js",
+		"start": "node server.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
@@ -19,7 +18,6 @@
 		"ejs": "^3.1.10",
 		"express": "^4.19.2",
 		"express-session": "^1.18.0",
-		"mongoose": "^8.3.2",
-		"nodemon": "^3.1.0"
+		"mongoose": "^8.3.2"
 	}
 }
