@@ -2,7 +2,27 @@
 <body>
 	<%- include('./partials/nav')%>
 
-	<main><%- include('./partials/banner') %></main>
+	<main><%- include('./partials/banner') %>
+	<form action="/filter" method="post">
+		<select id="filter" name="filter">
+			<%if(selected=="g"){ %>
+				<option value="g" selected>G</option>
+			<% }else{ %>
+				<option value="g">G</option>
+			<% } %>
+			<% if(selected=="g2") {%>
+				<option value="g2" selected>G2</option>
+			<%}else{ %>
+				<option value="g2" >G2</option>
+			<% } %>
+			<% if(selected=="all") {%>
+				<option value="all" selected>All</option>
+			<%}else{ %>
+				<option value="all" >All</option>
+			<% } %>
+		  </select>
+		  <Button>Filter</Button>
+	</form>
 	<% for(let i=0;i< user1.length;i++){ %>
 	<% if(user1[i].userType =="driver" && user1[i].testResult.comment=="DEFAULT"){ %>
 	<table class="table table-striped table-success" >
@@ -45,6 +65,7 @@
 		</table>
 		<% } %>
 		<% } %>
+	</main>
 </body>
 <script>
 	const updateUser= (id)=>{

@@ -23,7 +23,6 @@ router.get('/g2Test', checker.userTypeDriver, userController.getG2Test)
 router.post('/g2Test', userController.postG2Test)
 router.get('/testResult', userController.getResults)
 router.get('/delete/:_id', userController.getDelete)
-
 // Appointment Routes
 router.get(
 	'/appointment',
@@ -37,6 +36,7 @@ router.get('/test', examinerController.getTest)
 // Candidate Routes for Admin
 router.get('/candidate', candidateController.getCandidate)
 router.post('/candidate', candidateController.postCandidate)
+router.post('/filter', examinerController.postFilter)
 
 // Examiner Routes
 router.get('/examiner', examinerController.getExaminer)

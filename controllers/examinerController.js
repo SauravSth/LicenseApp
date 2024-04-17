@@ -8,7 +8,8 @@ class examinerController {
 		res.render('examiner', {
 			banner: 'Examiner Page',
 			subheading: msg || '',
-			user1: userData
+			user1: userData,
+			selected: "all"
 		})
 	}
 	static getTest = async (req,res) =>{
@@ -27,6 +28,18 @@ class examinerController {
 		    }catch(e){
 			console.log("db not updated "+e)
 		}
+	}
+	static postFilter= async(req,res)=>{
+		const form_data=req.body;
+		const msg = req.session.message
+		delete req.session.message
+		const userData = await user.find({testType: form_data.filter});
+		res.render('examiner', {
+			banner: 'Examiner Page',
+			subheading: msg || '',
+			user1: userData,
+			selected: form_data.filter
+		})
 	}
 }
 
